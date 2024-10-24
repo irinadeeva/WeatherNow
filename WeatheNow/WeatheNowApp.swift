@@ -9,9 +9,21 @@ import SwiftUI
 
 @main
 struct WeatheNowApp: App {
+    @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
+//    @StateObject var locationManager = LocationManager.shared
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group {
+                if isFirstLaunch {
+                    OnboardingView()
+                } else {
+                    ContentView()
+                        .onAppear {
+                            // TODO: locationManager.requestAccess()
+                        }
+                }
+            }
         }
     }
 }
