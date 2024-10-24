@@ -8,9 +8,9 @@
 import SwiftUI
 
 @main
-struct WeatheNowApp: App {
+struct WeatherNowApp: App {
     @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
-//    @StateObject var locationManager = LocationManager.shared
+    @StateObject var locationManager = LocationManager()
 
     var body: some Scene {
         WindowGroup {
@@ -20,10 +20,11 @@ struct WeatheNowApp: App {
                 } else {
                     ContentView()
                         .onAppear {
-                            // TODO: locationManager.requestAccess()
+                            locationManager.requestAccess()
                         }
                 }
             }
+            .environmentObject(locationManager)
         }
     }
 }
