@@ -9,7 +9,8 @@ import SwiftUI
 
 struct WeatherView: View {
     @StateObject private var viewModel = WeatherViewModel()
-    @ObservedObject var locationManager: LocationDataManager
+    @EnvironmentObject private var locationManager: LocationDataManager
+    @State private var city: String = ""
 
     var body: some View {
 
@@ -31,6 +32,7 @@ struct WeatherView: View {
                 .font(.title2)
                 .padding()
 
+            //TODO: delete
             VStack {
                 if let location = locationManager.coordinate {
                     Text("Your location: \(location.latitude), \(location.longitude)")

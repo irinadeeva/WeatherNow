@@ -6,20 +6,35 @@
 //
 
 import SwiftUI
+import CoreLocationUI
 
 struct ContentView: View {
-    @StateObject private var locationManager = LocationDataManager()
+    @EnvironmentObject private var locationManager: LocationDataManager
 
     var body: some View {
-        if locationManager.authorizationStatus == .authorizedWhenInUse {
-            WeatherView(locationManager: locationManager)
+
+        if locationManager.authorizationStatus == .notDetermined {
+            WelcomeView()
+        } else if locationManager.authorizationStatus == .authorizedWhenInUse {
+            WeatherView()
         } else {
-            Text("Please, give a permission of your Location")
+
+            //TODO: view
+            VStack(spacing: 20) {
+                Text("The WeatherNow App has no right")
+                    .bold()
+                    .font(.title)
+
+                Text("Please, give a permission of your Location")
+                    .padding()
+            }
+            .multilineTextAlignment(.center)
+            .padding()
         }
     }
 }
 
 //#Preview {
 //    ContentView()
-//        .environment(LocationManager())
+////        .environment(LocationDataManager())
 //}

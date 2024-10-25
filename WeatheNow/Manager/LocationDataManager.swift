@@ -18,6 +18,10 @@ final class LocationDataManager: NSObject, ObservableObject {
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
     }
 
+    func requestLocation() {
+        locationManager.requestWhenInUseAuthorization()
+    }
+
     func fetchCoordinate() {
         coordinate = locationManager.location?.coordinate
     }
@@ -46,7 +50,6 @@ extension LocationDataManager: CLLocationManagerDelegate {
 
         case .notDetermined:
             authorizationStatus = .notDetermined
-            manager.requestWhenInUseAuthorization()
             break
 
         default:
