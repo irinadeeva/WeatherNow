@@ -8,20 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var locationManager: LocationManager
+    @StateObject private var locationManager = LocationDataManager()
 
     var body: some View {
-//        // TODO: handle yes/no for request Location
-//        if locationManager.isNonAuthorised {
-            WeatherView()
-//        } else {
-//            Text("Please, give a permission of your Location")
-//                .fullScreenCover(isPresented: $locationManager.isNonAuthorised, content: {
-//                    Text("Please, give a permission of your Location")
-//                        .toolbar(.hidden, for: .automatic)
-//                })
-
-//        }
+        if locationManager.authorizationStatus == .authorizedWhenInUse {
+            WeatherView(locationManager: locationManager)
+        } else {
+            Text("Please, give a permission of your Location")
+        }
     }
 }
 

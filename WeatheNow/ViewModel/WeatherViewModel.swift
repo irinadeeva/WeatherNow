@@ -13,9 +13,8 @@ class WeatherViewModel: ObservableObject {
     @Published var temperature: String = "--"
     @Published var weatherDescription: String = "--"
 
-    func fetchWeather(_ latitude: CLLocationDegrees, _ longitude: CLLocationDegrees) {
+    func fetchWeather(at location: CLLocationCoordinate2D?) {
         //TODO: fetch weather
-        print(latitude)
-        print(longitude)
+        print(location!)
     }
 }

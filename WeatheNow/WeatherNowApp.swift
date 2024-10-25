@@ -10,7 +10,6 @@ import SwiftUI
 @main
 struct WeatherNowApp: App {
     @AppStorage("isFirstLaunch") var isFirstLaunch: Bool = true
-    @StateObject var locationManager = LocationManager()
 
     var body: some Scene {
         WindowGroup {
@@ -19,12 +18,8 @@ struct WeatherNowApp: App {
                     OnboardingView()
                 } else {
                     ContentView()
-                        .onAppear {
-                            locationManager.requestAccess()
-                        }
                 }
             }
-            .environmentObject(locationManager)
         }
     }
 }

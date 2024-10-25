@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct WeatherView: View {
-    @StateObject var viewModel = WeatherViewModel()
-    @EnvironmentObject var locationManager: LocationManager
+    @StateObject private var viewModel = WeatherViewModel()
+    @ObservedObject var locationManager: LocationDataManager
 
     var body: some View {
 
@@ -31,13 +31,23 @@ struct WeatherView: View {
                 .font(.title2)
                 .padding()
 
+            VStack {
+                if let location = locationManager.coordinate {
+                    Text("Your location: \(location.latitude), \(location.longitude)")
+                        }
+
+                    }
+
         }
         .padding()
         .onAppear {
-            //TODO: send location from LocationManager to fetchWeather()
-            if let location = locationManager.location {
-                viewModel.fetchWeather(location.latitude, location.longitude)
+            locationManager.fetchCoordinate()
+
+            if let location = locationManager.coordinate {
+                viewModel.fetchWeather(at: location)
             }
+
+            locationManager.stopMonitoring()
         }
     }
 }
