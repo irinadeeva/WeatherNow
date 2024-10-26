@@ -14,7 +14,6 @@ struct WeatherNowApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                // TODO: loading
                 ContentView()
             }
             .environmentObject(locationManager)

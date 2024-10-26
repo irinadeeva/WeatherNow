@@ -11,19 +11,27 @@ class WeatherViewModel: ObservableObject {
     @Published var cityName: String = "Loading..."
     @Published var temperature: String = "--"
     @Published var weatherDescription: String = "--"
+    @Published var errorMessage: String? = nil
+    @Published var showAlert = false
 
     private let weatherService = WeatherService()
 
     func fetchWeather(at location: Coordinates) {
-        //TODO: fetch weather
-        weatherService.fetchWeather(location: location) { weatherData in
-            guard let weatherData = weatherData else { return }
-//            DispatchQueue.main.async {
-                self.cityName = weatherData.name
-                self.temperature = String(format: "%.0f", weatherData.main.temp) + "°C"
-                self.weatherDescription = weatherData.weather.first?.description ?? ""
-//            }
+        weatherService.fetchWeather(location: location) {  [weak self] result in
+            guard let self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let weatherData):
+
+                    self.cityName = weatherData.name
+                    self.temperature = String(format: "%.0f", weatherData.main.temp) + "°C"
+                    self.weatherDescription = weatherData.weather.first?.description ?? ""
+
+                case .failure(let error):
+                    self.errorMessage = "Loading error: \(error)"
+                    self.showAlert = true
+                }
+            }
         }
     }
-    
 }

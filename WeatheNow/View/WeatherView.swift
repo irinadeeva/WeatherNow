@@ -14,11 +14,6 @@ struct WeatherView: View {
 
     var body: some View {
 
-        // TODO: handle loading else {
-        // ProgressView()
-        // }
-        // TODO: handle error
-
         VStack {
             Text(viewModel.cityName)
                 .font(.largeTitle)
@@ -36,12 +31,27 @@ struct WeatherView: View {
             VStack {
                 if let location = locationManager.coordinate {
                     Text("Your location: \(location.latitude), \(location.longitude)")
-                        }
+                }
 
-                    }
+            }
 
         }
         .padding()
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(verbatim: viewModel.errorMessage ?? "Unknown error"),
+                primaryButton: .default(Text("Try again")) {
+                    viewModel.showAlert = false
+                    if let location = locationManager.coordinate {
+                        viewModel.fetchWeather(at: Coordinates(latitude: location.latitude,
+                                                               longitude: location.longitude))
+                    }
+                },
+                secondaryButton: .cancel() {
+                    viewModel.showAlert = false
+                })
+        }
         .onAppear {
             locationManager.fetchCoordinate()
 

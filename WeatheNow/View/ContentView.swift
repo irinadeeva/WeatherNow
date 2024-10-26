@@ -18,23 +18,7 @@ struct ContentView: View {
         } else if locationManager.authorizationStatus == .authorizedWhenInUse {
             WeatherView()
         } else {
-
-            //TODO: view
-            VStack(spacing: 20) {
-                Text("The WeatherNow App has no right")
-                    .bold()
-                    .font(.title)
-
-                Text("Please, give a permission of your Location")
-                    .padding()
-            }
-            .multilineTextAlignment(.center)
-            .padding()
+            NoPermissionView()
         }
     }
 }
-
-//#Preview {
-//    ContentView()
-////        .environment(LocationDataManager())
-//}

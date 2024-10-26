@@ -7,76 +7,37 @@
 
 import Foundation
 
+public enum NetworkError: Error {
+    case codeError
+    case noData
+    case invalidResponse
+}
+
 typealias WeatherCompletion = (Result<WeatherData, NetworkError>) -> Void
 
 final class WeatherService {
 
-    func fetchWeather(location: Coordinates, completion: @escaping (WeatherData?) -> Void) {
+    func fetchWeather(location: Coordinates, completion: @escaping WeatherCompletion) {
         let urlString = "\(RequestConstants.baseURL)?lat=\(location.latitude)&lon=\(location.longitude)&appid=\(RequestConstants.apiKey)&units=metric"
 
-            guard let url = URL(string: urlString) else {
-                completion(nil)
+        guard let url = URL(string: urlString) else {
+            completion(.failure(NetworkError.codeError))
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                completion(.failure(NetworkError.noData))
                 return
             }
 
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                guard let data = data, error == nil else {
-                    completion(nil)
-                    return
-                }
+            do {
+                let weatherData = try JSONDecoder().decode(WeatherData.self, from: data)
+                completion(.success(weatherData))
+            } catch {
+                completion(.failure(NetworkError.invalidResponse))
+            }
 
-                let weatherData = try? JSONDecoder().decode(WeatherData.self, from: data)
-                DispatchQueue.main.async {
-                    print(weatherData)
-                    completion(weatherData)
-                }
-            }.resume()
-        }
-
-
-//    func loadWeather(at coordinates: Coordinates, completion: @escaping WeatherCompletion) {
-//        let path = "lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&appid=\(RequestConstants.apiKey)&units=metric"
-//
-//        Network.shared.fetch(path: path) { weather, error  in
-//            switch result {
-//            case let .success(data):
-//                completion(.success(data))
-//            case let .failure(error):
-//                completion(.failure(error))
-//            }
-//        }
-//
-//    }
-
-//
-//        private let urlSession = URLSession.shared
-//
-//        private init() {}
-//
-//        func fetchProfile(_ token: String, completionHandler: @escaping (Result<WeatherData, Error>) -> Void) {
-//
-//            guard let request = weatherRequest() else { return }
-//
-//            let task = urlSession.objectTask(for: request) { (result: Result<WeatherData, Error>) in
-//                DispatchQueue.main.async {
-//                    switch result {
-//                    case .success(let data):
-//                        completionHandler(.success(data))
-//                    case .failure(let error):
-//                        completionHandler(.failure(error))
-//                    }
-//                }
-//            }
-//
-//            task.resume()
-//        }
-
-
+        }.resume()
+    }
 }
-
-//extension WeatherService {
-//    func weatherRequest() -> URLRequest? {
-//        return URLRequest.buildRequest(
-//            path: RequestConstants.baseURL)
-//    }
-//}
