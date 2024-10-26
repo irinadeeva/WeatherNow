@@ -26,15 +26,6 @@ struct WeatherView: View {
             Text(viewModel.weatherDescription)
                 .font(.title2)
                 .padding()
-
-            //TODO: delete
-            VStack {
-                if let location = locationManager.coordinate {
-                    Text("Your location: \(location.latitude), \(location.longitude)")
-                }
-
-            }
-
         }
         .padding()
         .alert(isPresented: $viewModel.showAlert) {
@@ -64,7 +55,3 @@ struct WeatherView: View {
         }
     }
 }
-//
-//#Preview {
-//    WeatherView()
-//}

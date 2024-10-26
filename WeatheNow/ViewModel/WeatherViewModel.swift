@@ -22,13 +22,12 @@ class WeatherViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let weatherData):
-
                     self.cityName = weatherData.name
                     self.temperature = String(format: "%.0f", weatherData.main.temp) + "°C"
                     self.weatherDescription = weatherData.weather.first?.description ?? ""
 
                 case .failure(let error):
-                    self.errorMessage = "Loading error: \(error)"
+                    self.errorMessage = "Loading error: \(error.errorDescription)"
                     self.showAlert = true
                 }
             }

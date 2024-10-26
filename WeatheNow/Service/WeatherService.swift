@@ -7,37 +7,38 @@
 
 import Foundation
 
-public enum NetworkError: Error {
-    case codeError
-    case noData
-    case invalidResponse
-}
-
 typealias WeatherCompletion = (Result<WeatherData, NetworkError>) -> Void
 
 final class WeatherService {
-
+    private let urlSession = URLSession.shared
+    
     func fetchWeather(location: Coordinates, completion: @escaping WeatherCompletion) {
-        let urlString = "\(RequestConstants.baseURL)?lat=\(location.latitude)&lon=\(location.longitude)&appid=\(RequestConstants.apiKey)&units=metric"
-
-        guard let url = URL(string: urlString) else {
-            completion(.failure(NetworkError.codeError))
+        guard let request = weatherRequest(location: location) else {
+            completion(.failure(NetworkError.invalidRequest))
             return
         }
-
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                completion(.failure(NetworkError.noData))
-                return
+        
+        let task = urlSession.objectTask(for: request){ (result: Result<WeatherData, NetworkError>) in
+            switch result {
+            case .success(let data):
+                completion(.success(data))
+            case .failure(let error):
+                completion(.failure(error))
             }
+        }
+        
+        task.resume()
+    }
+    
+}
 
-            do {
-                let weatherData = try JSONDecoder().decode(WeatherData.self, from: data)
-                completion(.success(weatherData))
-            } catch {
-                completion(.failure(NetworkError.invalidResponse))
-            }
-
-        }.resume()
+extension WeatherService {
+    func weatherRequest(location: Coordinates) -> URLRequest? {
+        return URLRequest.buildRequest(
+            path: RequestConstants.baseURL,
+            queryItems: [URLQueryItem(name: "lat", value: "\(location.latitude)"),
+                         URLQueryItem(name: "lon", value: "\(location.longitude)"),
+                         URLQueryItem(name: "appid", value: RequestConstants.apiKey),
+                         URLQueryItem(name: "units", value: "metric")])
     }
 }

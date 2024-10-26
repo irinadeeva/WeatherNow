@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct WeatherNowApp: App {
     @StateObject private var locationManager = LocationDataManager()
-
+    
     var body: some Scene {
         WindowGroup {
             Group {
