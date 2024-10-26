@@ -14,19 +14,29 @@ final class Network: NSObject {
 
     override private init() { }
 
-    func get<T: Decodable>(path: String,
-                                 completion: @escaping (T?, NetworkError?) -> Void) {
+    func fetch(path: String, completion: @escaping (Result<WeatherData, Error>) -> Void) {
         let request = buildRequest(method: "GET", path: path)
 
-        let task = perform(request: request!) { [weak self] data, response, error in
-            guard let data, error == nil else {
-                completion(nil, ResponseHandler.shared.mapError(error!))
+        let task = perform(request: request!) { data, response, error in
+
+            if let error = error {
+                completion(.failure(ResponseHandler.shared.mapError(error)))
                 return
             }
 
-            let object = try? self?.decoder.decode(T.self, from: data)
-            completion(object, nil)
+            guard let data else {
+                completion(.failure(ResponseHandler.shared.mapError(NetworkError.notFound)))
+                return
+            }
+
+            do {
+                let response = try self.decoder.decode(WeatherData.self, from: data)
+                completion(.success(response))
+            } catch {
+                completion(.failure(ResponseHandler.shared.mapError(error)))
+            }
         }
+        
         task.resume()
     }
 }
@@ -47,7 +57,7 @@ extension Network: URLSessionDelegate {
                       queryItems: [URLQueryItem]? = nil,
                       body: (any Codable)? = nil)
     -> URLRequest? {
-        urlComponent?.path = "/api/v1"+path
+        urlComponent?.path = path
 
         if let queryItems = queryItems {
             urlComponent?.queryItems = queryItems

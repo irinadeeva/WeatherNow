@@ -7,12 +7,16 @@
 
 import Foundation
 
-struct Weather: Decodable {
-    let temperature: Double
-    let weatherDescription: String
+struct WeatherData: Decodable {
+    let name: String
+    let main: Main
+    let weather: [Weather]
 
-    enum CodingKeys: String, CodingKey {
-        case temperature = "t"
-        case weatherDescription = "w"
+    struct Main: Decodable {
+        let temp: Double
+    }
+
+    struct Weather: Decodable {
+        let description: String
     }
 }

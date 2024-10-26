@@ -46,7 +46,8 @@ struct WeatherView: View {
             locationManager.fetchCoordinate()
 
             if let location = locationManager.coordinate {
-                viewModel.fetchWeather(at: location)
+                viewModel.fetchWeather(at: Coordinates(latitude: location.latitude,
+                                                       longitude: location.longitude))
             }
 
             locationManager.stopMonitoring()

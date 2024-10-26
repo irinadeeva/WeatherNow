@@ -24,6 +24,8 @@
 		BE22F95E2CCBC9F70074D967 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22F95C2CCBC9F70074D967 /* Network.swift */; };
 		BE22F95F2CCBC9F70074D967 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22F95D2CCBC9F70074D967 /* NetworkError.swift */; };
 		BE22F9612CCBCA2A0074D967 /* RequestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22F9602CCBCA2A0074D967 /* RequestConstants.swift */; };
+		BE22F9652CCC04740074D967 /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22F9642CCC04740074D967 /* Coordinates.swift */; };
+		BE22F9672CCC0D2A0074D967 /* URLSession + Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE22F9662CCC0D2A0074D967 /* URLSession + Extention.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		BE22F95C2CCBC9F70074D967 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		BE22F95D2CCBC9F70074D967 /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		BE22F9602CCBCA2A0074D967 /* RequestConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestConstants.swift; sourceTree = "<group>"; };
+		BE22F9642CCC04740074D967 /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
+		BE22F9662CCC0D2A0074D967 /* URLSession + Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession + Extention.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				BE22F94C2CCA84CB0074D967 /* Weather.swift */,
+				BE22F9642CCC04740074D967 /* Coordinates.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 			children = (
 				BE22F9582CCBC9CE0074D967 /* ResponseHandler.swift */,
 				BE22F95D2CCBC9F70074D967 /* NetworkError.swift */,
+				BE22F9662CCC0D2A0074D967 /* URLSession + Extention.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -362,9 +368,11 @@
 				BE22F94D2CCA84CB0074D967 /* Weather.swift in Sources */,
 				BE22F9562CCBC2B90074D967 /* WelcomeView.swift in Sources */,
 				BE22F95F2CCBC9F70074D967 /* NetworkError.swift in Sources */,
+				BE22F9652CCC04740074D967 /* Coordinates.swift in Sources */,
 				BE22F9192CCA6DC10074D967 /* WeatherNowApp.swift in Sources */,
 				BE22F9512CCA88C60074D967 /* WeatherService.swift in Sources */,
 				BE22F9612CCBCA2A0074D967 /* RequestConstants.swift in Sources */,
+				BE22F9672CCC0D2A0074D967 /* URLSession + Extention.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

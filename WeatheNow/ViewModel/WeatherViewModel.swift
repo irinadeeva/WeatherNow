@@ -6,15 +6,24 @@
 //
 
 import Foundation
-import CoreLocation
 
 class WeatherViewModel: ObservableObject {
     @Published var cityName: String = "Loading..."
     @Published var temperature: String = "--"
     @Published var weatherDescription: String = "--"
 
-    func fetchWeather(at location: CLLocationCoordinate2D?) {
+    private let weatherService = WeatherService()
+
+    func fetchWeather(at location: Coordinates) {
         //TODO: fetch weather
-        print(location!)
+        weatherService.fetchWeather(location: location) { weatherData in
+            guard let weatherData = weatherData else { return }
+//            DispatchQueue.main.async {
+                self.cityName = weatherData.name
+                self.temperature = String(format: "%.0f", weatherData.main.temp) + "°C"
+                self.weatherDescription = weatherData.weather.first?.description ?? ""
+//            }
+        }
     }
+    
 }
