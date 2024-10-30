@@ -12,7 +12,6 @@ struct ContentView: View {
     @EnvironmentObject private var locationManager: LocationDataManager
 
     var body: some View {
-
         if locationManager.authorizationStatus == .notDetermined {
             WelcomeView()
         } else if locationManager.authorizationStatus == .authorizedWhenInUse {

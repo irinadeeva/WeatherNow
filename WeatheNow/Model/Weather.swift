@@ -8,15 +8,38 @@
 import Foundation
 
 struct WeatherData: Decodable {
+    let weather: [WeatherResponse]
+    let main: MainResponse
+    let visibility: Int
     let name: String
-    let main: Main
-    let weather: [Weather]
-    
-    struct Main: Decodable {
+    let wind: WindResponse
+    let clouds: CloudsResponse
+
+    struct WeatherResponse: Decodable {
+        let main: String
+        let icon: String
+    }
+
+    struct MainResponse: Decodable {
         let temp: Double
+        let feels_like: Double
+        let temp_min: Double
+        let temp_max: Double
+        let pressure: Double
+        let humidity: Int
     }
-    
-    struct Weather: Decodable {
-        let description: String
+
+    struct WindResponse: Decodable {
+        let speed: Double
     }
+
+    struct CloudsResponse: Decodable {
+        let all: Int
+    }
+}
+
+extension WeatherData.MainResponse {
+    var feelsLike: Double { return feels_like }
+    var tempMin: Double { return temp_min }
+    var tempMax: Double { return temp_max }
 }

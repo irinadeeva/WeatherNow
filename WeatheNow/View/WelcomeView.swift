@@ -24,13 +24,14 @@ struct WelcomeView: View {
             .multilineTextAlignment(.center)
             .padding()
 
-            LocationButton(.shareCurrentLocation) {
+            LocationButton(.shareMyCurrentLocation) {
                 locationManager.requestLocation()
             }
             .cornerRadius(30)
             .symbolVariant(.fill)
             .foregroundColor(.white)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
