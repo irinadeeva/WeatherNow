@@ -80,9 +80,11 @@ struct WeatherDataView: View {
             temp_max: 23.0,
             pressure: 1012,
             humidity: 60
-        ), visibility: 10_000,
+        ),
+        visibility: 10_000,
         name: "Moscow",
-        wind: WeatherData.WindResponse(speed: 5.5), clouds: WeatherData.CloudsResponse(all: 83))
+        wind: WeatherData.WindResponse(speed: 5.5),
+        clouds: WeatherData.CloudsResponse(all: 83))
     )
     .background(.accent)
     .preferredColorScheme(.dark)
