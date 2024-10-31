@@ -45,11 +45,12 @@ struct WeatherDetailsView: View {
 //                .frame(maxHeight: .infinity)
             }
         }
+        .scrollDisabled(true)
+        .scrollIndicators(.hidden)
         .interactiveDismissDisabled()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
         .padding(.horizontal)
-        .scrollIndicators(.hidden)
         .foregroundColor(.accent)
         .background(.white)
         .presentationDetents([.fraction(0.25), .medium])

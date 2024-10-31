@@ -43,3 +43,7 @@ extension WeatherData.MainResponse {
     var tempMin: Double { return temp_min }
     var tempMax: Double { return temp_max }
 }
+
+extension WeatherData.WeatherResponse {
+    var iconUrl: String { return RequestConstants.imageURL + icon + "@2x.png"}
+}

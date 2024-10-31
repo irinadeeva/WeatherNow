@@ -23,28 +23,39 @@ struct WeatherDataView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            VStack {
-                VStack {
+//            VStack {
+            VStack(spacing: 0) {
 
                     Text(weather.main.temp.roundDouble() + "°C")
                         .font(.system(size: 80))
                         .fontWeight(.bold)
-                        .padding()
+                        .padding(.top)
 
-                    VStack(spacing: 20) {
-                        Image(systemName: "cloud.rain.fill")
-                            .font(.system(size: 40))
+                    VStack(spacing: 0) {
+//                        Image(systemName: "cloud.rain.fill")
+//                            .font(.system(size: 40))
+
+                        AsyncImage(url: URL(string: weather.weather[0].iconUrl)) { image in
+                                        image.resizable()
+//                                .aspectRatio(contentMode: .fit)
+
+                                    } placeholder: {
+
+                                        LoadingView()
+
+                                    }
+                                    .frame(width: 100, height: 100)
 
                         Text(weather.weather[0].main)
                     }
                 }
-            }
+//            }
             .frame(maxWidth: .infinity)
 
-            Spacer()
+//            Spacer()
 
         }
-        .frame(maxHeight: .infinity)
+        .frame(maxHeight: .infinity, alignment: .top)
         .padding()
         .sheet(isPresented: $showSheet) {
 
