@@ -14,12 +14,16 @@ struct WeatherView: View {
     var body: some View {
 
         VStack {
-            if viewModel.isLoading {
-                LoadingView()
-            } else {
-                if let weather = viewModel.weather {
-                    WeatherDataView(weather: weather)
+            if (locationManager.coordinate != nil) {
+                if viewModel.isLoading {
+                    LoadingView()
+                } else {
+                    if let weather = viewModel.weather {
+                        WeatherDataView(weather: weather)
+                    }
                 }
+            } else {
+                errorView
             }
         }
         .edgesIgnoringSafeArea(.bottom)
@@ -41,7 +45,6 @@ struct WeatherView: View {
                     viewModel.showAlert = false
                 })
         }
-        //TODO: handle error
         .alert(isPresented: $locationManager.showAlert) {
             Alert(
                 title: Text("Error"),
@@ -57,6 +60,30 @@ struct WeatherView: View {
         .onAppear {
             getWeatherData()
         }
+    }
+
+    private var errorView: some View {
+        VStack(spacing: 16) {
+            Text("Unable to fetch weather: Location unavailable")
+                .font(.headline)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.white)
+                .padding(.horizontal)
+
+            Button(action: {
+                getWeatherData()
+            }) {
+                Text("Try Again")
+                    .foregroundColor(.blue)
+                    .fontWeight(.bold)
+                    .frame(width: 120, height: 40)
+                    .background(Color.white)
+                    .clipShape(Capsule())
+                    .shadow(radius: 5)
+            }
+            .padding(.top, 8)
+        }
+        .padding()
     }
 
     private func getWeatherData() {
