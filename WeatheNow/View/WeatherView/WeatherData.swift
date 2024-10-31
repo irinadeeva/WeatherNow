@@ -73,6 +73,6 @@ struct WeatherDataView: View {
         name: "Moscow",
         wind: WeatherData.WindResponse(speed: 5.5), clouds: WeatherData.CloudsResponse(all: 83))
     )
-    .background(Color(hue: 0.656, saturation: 0.787, brightness: 0.354))
+    .background(.accent)
     .preferredColorScheme(.dark)
 }

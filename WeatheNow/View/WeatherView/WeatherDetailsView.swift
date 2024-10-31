@@ -50,7 +50,7 @@ struct WeatherDetailsView: View {
         .padding()
         .padding(.horizontal)
         .scrollIndicators(.hidden)
-        .foregroundColor(Color(hue: 0.656, saturation: 0.787, brightness: 0.354))
+        .foregroundColor(.accent)
         .background(.white)
         .presentationDetents([.fraction(0.25), .medium])
         .ignoresSafeArea(.container, edges: .bottom)
@@ -87,7 +87,7 @@ struct WeatherRow: View {
                 .font(.title2)
                 .frame(width: 20, height: 20)
                 .padding()
-                .background(Color(hue: 1.0, saturation: 0.0, brightness: 0.888))
+                .background(.grey)
                 .cornerRadius(50)
 
             VStack(alignment: .leading, spacing: 8) {
