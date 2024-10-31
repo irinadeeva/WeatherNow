@@ -1,5 +1,7 @@
 # WeatherApp
 
+![AppStore WeaterNow](AppStoreWeaterNow.png)
+
 ## Overview
 **WeatherApp** is an iOS application that displays the current weather based on the user’s location, showing the city, temperature, and a brief weather description.
 
